@@ -1,0 +1,52 @@
+#instalação pacotes
+
+yum update
+yum install curl zlib-devel curl-devel openssl-devel httpd-devel apr-devel apr-util-devel mysql-devel ftp wget ImageMagick-devel gcc-c++ patch readline readline-devel zlib libyaml-devel libffi-devel make bzip2 autoconf automake libtool bison subversion sqlite-devel
+yum install mariadb-server
+ systemctl start mariadb-server
+ systemctl enable mariadb-server
+
+#criação base de dados
+mysql_secure_installation
+mysql -uroot -p
+MariaDB [(none)]> CREATE DATABASE redmine CHARACTER SET utf8;
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost' IDENTIFIED BY 'redmine_passwd';
+MariaDB [(none)]> FLUSH PRIVILEGES;
+MariaDB [(none)]> \q
+
+#criação usuário
+sudo adduser --home /opt/redmine --shell /bin/bash --gecos 'Redmine application' redmine
+sudo install -d -m 755 -o redmine -g redmine /opt/redmine
+
+#instalação ruby
+su - redmine
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+curl -sSL https://get.rvm.io | bash -s stable --ruby
+source ~/.rvm/scripts/rvm
+rvm --default use ruby
+
+#instalação redmine
+cd && svn co http://svn.redmine.org/redmine/branches/3.4-stable redmine
+mkdir -p ./redmine/tmp/pids ./redmine/public/plugin_assets
+cp ./redmine/config/configuration.yml.example ./redmine/config/configuration.yml
+cp ./redmine/config/database.yml.example ./redmine/config/database.yml
+vim ./redmine/config/database.yml
+
+#instalação gems
+cd /opt/redmine/redmine
+echo "gem 'puma'" >> Gemfile.local
+echo "gem: --no-ri --no-rdoc" >> ~/.gemrc 
+gem install bundler
+bundle install --without development test postgresql sqlite
+rake generate_secret_token
+RAILS_ENV=production rake db:migrate
+RAILS_ENV=production REDMINE_LANG=en rake redmine:load_default_data
+
+#configuração puma
+vim ./config/redmine/config/puma.rb
+(anexo arquivo puma.rb)
+
+#Iniciar puma
+cd /opt/redmine/redmine/ && bundle exec puma --config config/puma.rb
+
+Fonte: https://www.rosehosting.com/blog/how-to-install-redmine-on-centos-7/
