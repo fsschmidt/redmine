@@ -1,0 +1,4 @@
+ cp circle_theme-2_1_3.zip /opt/redmine/redmine/public/themes/
+ cd /opt/redmine/redmine/public/themes/
+ unzip circle_theme-2_1_3.zip
+ chown redmine.redmine circle -R
