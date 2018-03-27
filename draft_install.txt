@@ -43,7 +43,7 @@ RAILS_ENV=production rake db:migrate
 RAILS_ENV=production REDMINE_LANG=en rake redmine:load_default_data
 
 #configuração puma
-vim ./config/redmine/config/puma.rb
+vim config/puma.rb
 (anexo arquivo puma.rb)
 
 #Iniciar puma
