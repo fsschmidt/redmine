@@ -1,4 +1,6 @@
 yum install nginx
+systemctl start nginx
+systemctl enable nginx
 
 vim nginx.conf
 linha 23: include             vhost/*.conf;
