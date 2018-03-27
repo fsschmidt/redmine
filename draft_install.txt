@@ -15,7 +15,7 @@ MariaDB [(none)]> FLUSH PRIVILEGES;
 MariaDB [(none)]> \q
 
 #criação usuário
-sudo adduser --home /opt/redmine --shell /bin/bash --gecos 'Redmine application' redmine
+sudo adduser --home /opt/redmine --shell /bin/bash -c 'Redmine application' redmine
 sudo install -d -m 755 -o redmine -g redmine /opt/redmine
 
 #instalação ruby
