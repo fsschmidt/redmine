@@ -1,0 +1,4 @@
+yum install nginx
+
+vim nginx.conf
+linha 23: include             vhost/*.conf;
