@@ -1,0 +1,9 @@
+cd /opt/redmine/redmine/config
+vim routes.rb
+
+alterar
+
+from:
+root :to => 'welcome#index', :as => 'home'
+to:
+root :to => 'my#page', :as => 'home
