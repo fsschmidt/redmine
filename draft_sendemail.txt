@@ -1,0 +1,9 @@
+#configuration.yml
+
+production:
+   email_delivery:
+      delivery_method: :smtp
+      smtp_settings:
+        address: "mail.dominio.com.br"
+        port: 25
+        domain: "dominio.com.br"
