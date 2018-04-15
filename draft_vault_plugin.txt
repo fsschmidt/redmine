@@ -1,0 +1,24 @@
+https://noshutdown.ru/en/redmine-plugins-vault/
+
+# su - redmine
+$ cd /opt/redmine/redmine/plugins
+$ wget https://noshutdown.ru/download/1627/vault.zip
+$ unzip vault.zip
+$ cd ../
+$ bundle install --without development test postgresql sqlite
+$ rake redmine:plugins:migrate RAILS_ENV=production
+
+After installing a plugin, open the settings http://*/settings/plugin/vault
+and enter encryption key in the Encryption key field. Or use encryption Redmine Encryption,
+to do this, add the encryption key to a file config/configuration.yml, for example
+database_cipher_key: HediddAwkAbCunnoashtAlEcBuobdids and check the box on the
+Use Redmine Encryption.
+
+vim config/initializers/assets.rb
+Rails.application.config.assets.precompile += %w( zeroclipboard.js )
+
+ps aux | grep puma
+
+kill process
+
+start
